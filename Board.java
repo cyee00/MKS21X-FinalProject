@@ -24,4 +24,29 @@ public class Board{
       }
     }
   }
+
+  /**Returns the width/height of the board.
+  *@return the width/height as an int.
+  */
+  public int getWidth(){
+    return board.size();
+  }
+
+  /**Deletes a block. Helper function for combining blocks.
+  *@param b is the block to be deleted.
+  */
+  public void delete(Block b){
+    b.setValue(0);
+    //insert code to reset its physical appearance
+  }
+
+  /**Combines two blocks.
+  *@param this is the block that will remain.
+  *@param other is the block that will be combined into Block this and be deleted.
+  */
+  public void combine(Block this, Block other){
+    delete(other);
+    this.setValue(this.getValue()*2);
+    //insert code to change its physical appearance
+  }
 }
