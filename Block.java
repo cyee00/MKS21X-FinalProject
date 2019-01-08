@@ -7,8 +7,10 @@ public class Block{
   *(xcor, ycor) and value val.
   *@param xcor is its new column
   *@param ycor is its new row
+  *@param val is its value
+  *@param wh is its width/height
   */
-  public Block(int xcor, int ycor, int val){
+  public Block(int xcor, int ycor, int val, int wh){
     x=xcor;
     y=ycor;
     value=val;
