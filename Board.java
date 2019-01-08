@@ -1,4 +1,18 @@
 import java.util.ArrayList;
+// http://mabe02.github.io/lanterna/apidocs/2.1/
+import com.googlecode.lanterna.terminal.Terminal.SGR;
+import com.googlecode.lanterna.TerminalFacade;
+import com.googlecode.lanterna.input.Key;
+import com.googlecode.lanterna.input.Key.Kind;
+import com.googlecode.lanterna.terminal.Terminal;
+import com.googlecode.lanterna.terminal.Terminal.Color;
+import com.googlecode.lanterna.terminal.TerminalSize;
+import com.googlecode.lanterna.LanternaException;
+import com.googlecode.lanterna.input.CharacterPattern;
+import com.googlecode.lanterna.input.InputDecoder;
+import com.googlecode.lanterna.input.InputProvider;
+import com.googlecode.lanterna.input.Key;
+import com.googlecode.lanterna.input.KeyMappingProfile;
 
 public class Board{
   private ArrayList<ArrayList<Block>> board;
@@ -41,12 +55,46 @@ public class Board{
   }
 
   /**Combines two blocks.
-  *@param this is the block that will remain.
-  *@param other is the block that will be combined into Block this and be deleted.
+  *@param t is the block that will remain.
+  *@param o is the block that will be combined into Block this and be deleted.
   */
-  public void combine(Block this, Block other){
-    delete(other);
-    this.setValue(this.getValue()*2);
+  public void combine(Block t, Block o){
+    delete(o);
+    t.setValue(t.getValue()*2);
     //insert code to change its physical appearance
+  }
+
+  public static void main(String[]args){
+    Terminal terminal = TerminalFacade.createTextTerminal();
+      System.out.println(terminal.getTerminalSize()+"");
+    terminal.enterPrivateMode();
+    terminal.setCursorVisible(false);
+    boolean running = true;
+    while (running){
+      Key key = terminal.readInput();
+      if (key!=null){
+        boolean won=false;
+        if (key.getKind() == Key.Kind.Escape) {
+					terminal.exitPrivateMode();
+					running = false;
+				}
+				if (key.getKind() == Key.Kind.ArrowLeft) {
+
+				}
+
+				if (key.getKind() == Key.Kind.ArrowRight) {
+
+				}
+
+				if (key.getKind() == Key.Kind.ArrowUp) {
+
+				}
+
+				if (key.getKind() == Key.Kind.ArrowDown) {
+
+				}
+        if (won){running=false;}
+      }
+    }
   }
 }
