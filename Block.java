@@ -7,7 +7,10 @@ public class Block{
   *(xcor, ycor) and value val.
   *@param xcor is its new column
   *@param ycor is its new row
+<<<<<<< Updated upstream
+=======
   *@param val is its value
+>>>>>>> Charlotte
   */
   public Block(int xcor, int ycor, int val){
     x=xcor;
