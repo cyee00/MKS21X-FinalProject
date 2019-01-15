@@ -13,3 +13,10 @@ Development Log
      I ran into some issues with commits and branches getting muddled up and realized
      I really need to think the order of my commits through and be more aware of which
      branch I'm on.
+1/9: Continued working on implementing lanterna and getting the game to display in the
+     terminal.
+1/12:I continued working but ran into a roadblock when I couldn't commit or merge due to
+     merge conflicts. It was really frustrating and I was unable to solve the issue (which
+     is totally on me).
+1/14:I continued to try to solve the merge conflicts and decided I had to delete my Board
+     class and re-add it. It worked.
