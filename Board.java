@@ -82,14 +82,16 @@ public class Board{
     for (int r=0;r<b.getWidth();r++){
       for (int c=0;c<b.getWidth()-1;c++){
         if (b.valueAt(r,c)==0){
-          s+="t";
+          s+=" ";
         }else{
           s+=b.valueAt(r,c);
         }
-        s+="\t";
+        if (c!=b.getWidth()-2){
+          s+="\t";
+        }
       }
-      s+=b.valueAt(r,b.getWidth()-2)+"";
-      s+="\n";
+      //s+=b.valueAt(r,b.getWidth()-2)+"";
+      s+="\n\n";
     }
     for(int i = 0; i < s.length();i++){
       t.putCharacter(s.charAt(i));
@@ -100,7 +102,8 @@ public class Board{
     Terminal terminal = TerminalFacade.createTextTerminal();
     terminal.enterPrivateMode();
     terminal.setCursorVisible(false);
-    new Board();
+    Board b = new Board();
+    putString(b,0,0,terminal);
     boolean running = true;
     while (running){
       Key key = terminal.readInput();
