@@ -85,13 +85,13 @@ public class Board{
     t.moveCursor(x,y);
     String s="";
     for (int r=0;r<b.getWidth();r++){
-      for (int c=0;c<b.getWidth()-1;c++){
+      for (int c=0;c<b.getWidth();c++){
         if (b.valueAt(r,c)==0){
-          s+=" ";
+          s+="\u25A0";
         }else{
           s+=b.valueAt(r,c);
         }
-        if (c!=b.getWidth()-2){
+        if (c!=b.getWidth()-1){
           s+="\t";
         }
       }
