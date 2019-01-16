@@ -23,3 +23,6 @@ Development Log
 1/15:Worked at home to continue working out kinks in the project. Now that I've gotten
      the game to display (finally!!), my next step is to figure out how to program the
      actual gameplay.
+1/16:Started trying to program the actual gameplay and the logic is tripping me up. I also
+     realized that some methods I originally put in my Board class actually belonged to the
+     Block class.
