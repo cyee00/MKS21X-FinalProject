@@ -12,6 +12,7 @@ import com.googlecode.lanterna.input.InputDecoder;
 import com.googlecode.lanterna.input.InputProvider;
 import com.googlecode.lanterna.input.Key;
 import com.googlecode.lanterna.input.KeyMappingProfile;
+import java.util.Random;
 
 public class Board{
   public Block[][] board=new Block[4][4];
@@ -23,6 +24,10 @@ public class Board{
         board[i][n]=new Block(i,n,0);
       }
     }
+    Random rng = new Random();
+    int row=java.lang.Math.abs(rng.nextInt()%4);
+    int col=java.lang.Math.abs(rng.nextInt()%4);
+    board[row][col].setValue(2);
   }
 
 
@@ -90,7 +95,6 @@ public class Board{
           s+="\t";
         }
       }
-      //s+=b.valueAt(r,b.getWidth()-2)+"";
       s+="\n\n";
     }
     for(int i = 0; i < s.length();i++){
