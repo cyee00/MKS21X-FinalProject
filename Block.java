@@ -2,6 +2,7 @@ public class Block{
   private int x;
   private int y;
   private int value;
+  private boolean shifted=false;
 
   /**Create a new Block with location at
   *(xcor, ycor) and value val.
@@ -42,4 +43,23 @@ public class Block{
     y=newy;
   }
 
+    public boolean move(String s){
+      if (s.equals("left")){
+
+      }
+      if (s.equals("right")){
+
+      }
+      if (s.equals("up")){
+
+      }
+      if (s.equals("down")){
+
+      }
+      return true;
+    }
+
+    public void shifted(boolean b){
+      shifted=b;
+    }
 }

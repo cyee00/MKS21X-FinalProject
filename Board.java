@@ -16,6 +16,7 @@ import java.util.Random;
 
 public class Board{
   public Block[][] board=new Block[4][4];
+  boolean shifted=false;
   /**Creates a new 4 by 4 board.
   */
   public Board(){
@@ -71,6 +72,11 @@ public class Board{
   public int valueAt(int r,int c){
     return board[r][c].getValue();
   }
+
+  public Block blockAt(int r,int c){
+    return board[r][c];
+  }
+
 
 /*
   /**Deletes a block. Helper function for combining blocks.
@@ -134,9 +140,9 @@ public class Board{
                     running = false;
                 }
                 if (key.getKind() == Key.Kind.ArrowLeft) {
-                  for (int i=0;i<board.length;i++){
-                    for (int n=0;n<board.length;i++){
-                      board[i][mostLeft(n)]=board[]
+                  for (int i=0;i<b.getWidth();i++){
+                    for (int n=0;n<b.getWidth();i++){
+                      b.blockAt(i,n).shifted(b.blockAt(i,n).move("left"));
                     }
                   }
                     if (won){
@@ -165,7 +171,6 @@ public class Board{
                     System.out.println("You got 2048 and won!!");
                   }
                 }
-        if (won){running=false;}
       }
     }
   }
