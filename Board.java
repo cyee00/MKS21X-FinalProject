@@ -24,12 +24,27 @@ public class Board{
         board[i][n]=new Block(i,n,0);
       }
     }
-    Random rng = new Random();
-    int row=java.lang.Math.abs(rng.nextInt()%4);
-    int col=java.lang.Math.abs(rng.nextInt()%4);
-    board[row][col].setValue(2);
+    Random rng=new Random();
+    board[randomRow(rng.nextInt())][randomCol(rng.nextInt())].setValue(2);
   }
 
+  /**Randomly generates a new row.
+  *@param x is the seed, randomly generated in constructor.
+  */
+  public static int randomRow(int x){
+    Random rng = new Random(x);
+    int row=java.lang.Math.abs(rng.nextInt()%4);
+    return row;
+  }
+
+  /**Randomly generates a new column.
+  *@param x is the seed, randomly generated in constructor.
+  */
+  public static int randomCol(int x){
+    Random rng = new Random(x);
+    int col=java.lang.Math.abs(rng.nextInt()%4);
+    return col;
+  }
 
 /*
   /**Creates a new x by x board.
@@ -113,24 +128,42 @@ public class Board{
       Key key = terminal.readInput();
       if (key!=null){
         boolean won=false;
+        Random rng = new Random();
         if (key.getKind() == Key.Kind.Escape) {
                     terminal.exitPrivateMode();
                     running = false;
                 }
                 if (key.getKind() == Key.Kind.ArrowLeft) {
-
+                  for (int i=0;i<board.length;i++){
+                    for (int n=0;n<board.length;i++){
+                      board[i][mostLeft(n)]=board[]
+                    }
+                  }
+                    if (won){
+                      terminal.exitPrivateMode();
+                      System.out.println("You got 2048 and won!!");
+                    }
                 }
 
                 if (key.getKind() == Key.Kind.ArrowRight) {
-
+                  if (won){
+                    terminal.exitPrivateMode();
+                    System.out.println("You got 2048 and won!!");
+                  }
                 }
 
                 if (key.getKind() == Key.Kind.ArrowUp) {
-
+                  if (won){
+                    terminal.exitPrivateMode();
+                    System.out.println("You got 2048 and won!!");
+                  }
                 }
 
                 if (key.getKind() == Key.Kind.ArrowDown) {
-
+                  if (won){
+                    terminal.exitPrivateMode();
+                    System.out.println("You got 2048 and won!!");
+                  }
                 }
         if (won){running=false;}
       }
