@@ -20,3 +20,6 @@ Development Log
      is totally on me).
 1/14:I continued to try to solve the merge conflicts and decided I had to delete my Board
      class and re-add it. It worked.
+1/15:Worked at home to continue working out kinks in the project. Now that I've gotten
+     the game to display (finally!!), my next step is to figure out how to program the
+     actual gameplay.
