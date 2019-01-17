@@ -78,27 +78,41 @@ public class Board{
   }
 
 
-/*
+
   /**Deletes a block. Helper function for combining blocks.
   *@param b is the block to be deleted.
-
+  */
   public void delete(Block b){
     b.setValue(0);
-    //insert code to reset its physical appearance
   }
-  */
 
-/*
+
   /**Combines two blocks.
   *@param t is the block that will remain.
   *@param o is the block that will be combined into Block this and be deleted.
-
+  */
   public void combine(Block t, Block o){
     delete(o);
     t.setValue(t.getValue()*2);
-    //insert code to change its physical appearance
   }
-  */
+
+  public boolean move(Block block, String s){
+    if (s.equals("left")){
+      if (valueAt(block.getRow()-1,block.getCol())==0){
+        delete(blockAt(block.getRow()-1,block.getCol()));
+      }
+    }
+    if (s.equals("right")){
+
+    }
+    if (s.equals("up")){
+
+    }
+    if (s.equals("down")){
+
+    }
+    return true;
+  }
 
   /**Configurates Terminal to look like 2048.
   */
@@ -135,14 +149,14 @@ public class Board{
       if (key!=null){
         boolean won=false;
         Random rng = new Random();
-        if (key.getKind() == Key.Kind.Escape) {
+                if (key.getKind() == Key.Kind.Escape) {
                     terminal.exitPrivateMode();
                     running = false;
                 }
                 if (key.getKind() == Key.Kind.ArrowLeft) {
-                  for (int i=0;i<b.getWidth();i++){
+                  for (int i=1;i<b.getWidth();i++){
                     for (int n=0;n<b.getWidth();i++){
-                      b.blockAt(i,n).shifted(b.blockAt(i,n).move("left"));
+                      b.move(b.blockAt(i,n),"left");
                     }
                   }
                     if (won){
@@ -152,6 +166,11 @@ public class Board{
                 }
 
                 if (key.getKind() == Key.Kind.ArrowRight) {
+                  for (int i=b.getWidth()-1;i>-1;i--){
+                    for (int n=b.getWidth()-1;n>-1;n--){
+                      b.move(b.blockAt(i,n),"right");
+                    }
+                  }
                   if (won){
                     terminal.exitPrivateMode();
                     System.out.println("You got 2048 and won!!");
@@ -159,6 +178,11 @@ public class Board{
                 }
 
                 if (key.getKind() == Key.Kind.ArrowUp) {
+                  for (int n=1;n<b.getWidth();n++){
+                    for (int i=0;i<b.getWidth();i++){
+                      b.move(b.blockAt(i,n),"up");
+                    }
+                  }
                   if (won){
                     terminal.exitPrivateMode();
                     System.out.println("You got 2048 and won!!");
@@ -166,6 +190,11 @@ public class Board{
                 }
 
                 if (key.getKind() == Key.Kind.ArrowDown) {
+                  for (int n=b.getWidth()-1;n>-1;n--){
+                    for (int i=b.getWidth()-1;i>-1;i--){
+                      b.move(b.blockAt(i,n),"down");
+                    }
+                  }
                   if (won){
                     terminal.exitPrivateMode();
                     System.out.println("You got 2048 and won!!");

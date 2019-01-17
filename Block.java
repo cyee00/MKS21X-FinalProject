@@ -43,21 +43,13 @@ public class Block{
     y=newy;
   }
 
-    public boolean move(String s){
-      if (s.equals("left")){
+  public int getRow(){
+    return x;
+  }
 
-      }
-      if (s.equals("right")){
-
-      }
-      if (s.equals("up")){
-
-      }
-      if (s.equals("down")){
-
-      }
-      return true;
-    }
+  public int getCol(){
+    return y;
+  }
 
     public void shifted(boolean b){
       shifted=b;
