@@ -16,7 +16,6 @@ import java.util.Random;
 
 public class Board{
   public Block[][] board=new Block[4][4];
-  boolean shifted=false;
   /**Creates a new 4 by 4 board.
   */
   public Board(){
@@ -25,8 +24,9 @@ public class Board{
         board[i][n]=new Block(i,n,0);
       }
     }
-    Random rng=new Random();
-    board[randomRow(rng.nextInt())][randomCol(rng.nextInt())].setValue(2);
+    randomBlock();
+    //Random rng=new Random();
+    //board[randomRow(rng.nextInt())][randomCol(rng.nextInt())].setValue(2);
   }
 
   /**Randomly generates a new row.
@@ -45,6 +45,23 @@ public class Board{
     Random rng = new Random(x);
     int col=java.lang.Math.abs(rng.nextInt()%4);
     return col;
+  }
+
+  public boolean randomBlock(){
+    Random rng = new Random();
+    boolean fits = false;
+    int row, col;
+    int tries=0;
+    while (!fits&&tries<100){
+      row=randomRow(rng.nextInt());
+      col=randomCol(rng.nextInt());
+      if (valueAt(row,col)==0){
+        board[row][col]=new Block(row,col,2);
+        fits=true;
+      }
+      tries++;
+    }
+    return fits;
   }
 
   /**Returns the width/height of the board.
@@ -83,18 +100,44 @@ public class Board{
 
   public boolean move(Block block, String s){
     if (s.equals("left")){
-      if (valueAt(block.getRow(),block.getCol()-1)==0){//if there's a free space to the left
-        board[block.getRow()][block.getCol()-1]=block;
+      if (valueAt(block.getRow(),block.getCol()-1)==0){//if there's a free space to the left, move there
+        board[block.getRow()][block.getCol()-1]=new Block(block.getRow(),block.getCol()-1,block.getValue());
         delete(block);
-      }//else if()
+        return true;
+      }else if(valueAt(block.getRow(),block.getCol()-1)==valueAt(block.getRow(),block.getCol())){//if the block to the left has same value, combine!
+        combine(blockAt(block.getRow(),block.getCol()-1),block);
+        return true;
+      }
     }
-    if (s.equals("right")){
-
+    else if (s.equals("right")){
+      if (valueAt(block.getRow(),block.getCol()+1)==0){//if there's a free space to the right
+        board[block.getRow()][block.getCol()+1]=new Block(block.getRow(),block.getCol()+1,block.getValue());
+        delete(block);
+        return true;
+      }else if(valueAt(block.getRow(),block.getCol()+1)==valueAt(block.getRow(),block.getCol())){
+        combine(blockAt(block.getRow(),block.getCol()+1),block);
+        return true;
+      }
     }
-    if (s.equals("up")){
+    else if (s.equals("up")){
+      if (valueAt(block.getRow()+1,block.getCol())==0){//if there's a free space to the top
+        board[block.getRow()+1][block.getCol()]=new Block(block.getRow()+1,block.getCol(),block.getValue());
+        delete(block);
+        return true;
+      }else if(valueAt(block.getRow()+1,block.getCol())==valueAt(block.getRow(),block.getCol())){
+        combine(blockAt(block.getRow()+1,block.getCol()),block);
+        return true;
+      }
     }
-    if (s.equals("down")){
-
+    else if (s.equals("down")){
+      if (valueAt(block.getRow()-1,block.getCol())==0){//if there's a free space to the top
+        board[block.getRow()-1][block.getCol()]=new Block(block.getRow()-1,block.getCol(),block.getValue());
+        delete(block);
+        return true;
+      }else if(valueAt(block.getRow()-1,block.getCol())==valueAt(block.getRow(),block.getCol())){
+        combine(blockAt(block.getRow()-1,block.getCol()),block);
+        return true;
+      }
     }
     return true;
   }
@@ -152,8 +195,8 @@ public class Board{
                 }
 
                 else if (key.getKind() == Key.Kind.ArrowRight) {
-                  for (int i=b.getWidth()-1;i>-1;i--){
-                    for (int n=b.getWidth()-1;n>-1;n--){
+                  for (int i=b.getWidth()-2;i>-1;i--){
+                    for (int n=b.getWidth()-2;n>-1;n--){
                       b.move(b.blockAt(i,n),"right");
                     }
                   }
@@ -164,8 +207,8 @@ public class Board{
                 }
 
                 else if (key.getKind() == Key.Kind.ArrowUp) {
-                  for (int n=1;n<b.getWidth();n++){
-                    for (int i=0;i<b.getWidth();i++){
+                  for (int n=0;n<b.getWidth()-1;n++){
+                    for (int i=0;i<b.getWidth()-1;i++){
                       b.move(b.blockAt(i,n),"up");
                     }
                   }
@@ -176,7 +219,7 @@ public class Board{
                 }
 
                 else if (key.getKind() == Key.Kind.ArrowDown) {
-                  for (int n=b.getWidth()-1;n>-1;n--){
+                  for (int n=b.getWidth()-1;n>0;n--){
                     for (int i=b.getWidth()-1;i>-1;i--){
                       b.move(b.blockAt(i,n),"down");
                     }
@@ -186,7 +229,12 @@ public class Board{
                     System.out.println("You got 2048 and won!!");
                   }
                 }
-                putString(b,terminal);
+                if (b.randomBlock()){
+                  putString(b,terminal);
+                }else{
+                  terminal.exitPrivateMode();
+                  System.out.println("You lost :(");
+                }
       }
     //}catch(ArrayIndexOutOfBoundsException e){}
     }
