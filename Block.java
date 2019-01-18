@@ -44,11 +44,11 @@ public class Block{
   }
 
   public int getRow(){
-    return x;
+    return y;
   }
 
   public int getCol(){
-    return y;
+    return x;
   }
 
     public void shifted(boolean b){

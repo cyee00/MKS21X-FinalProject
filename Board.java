@@ -47,21 +47,6 @@ public class Board{
     return col;
   }
 
-/*
-  /**Creates a new x by x board.
-  *@param x is the new width and height.
-
-  public Board(int x){
-    Block[][] board;
-    for (int i=0;i<x;i++){
-      for (int n=0;n<x;n++){
-        board[i][n]=new Block(i,n,0);
-      }
-    }
-  }
-  */
-
-
   /**Returns the width/height of the board.
   *@return the width/height as an int.
   */
@@ -98,15 +83,15 @@ public class Board{
 
   public boolean move(Block block, String s){
     if (s.equals("left")){
-      if (valueAt(block.getRow()-1,block.getCol())==0){
-        delete(blockAt(block.getRow()-1,block.getCol()));
-      }
+      if (valueAt(block.getRow(),block.getCol()-1)==0){//if there's a free space to the left
+        board[block.getRow()][block.getCol()-1]=block;
+        delete(block);
+      }//else if()
     }
     if (s.equals("right")){
 
     }
     if (s.equals("up")){
-
     }
     if (s.equals("down")){
 
@@ -116,8 +101,8 @@ public class Board{
 
   /**Configurates Terminal to look like 2048.
   */
-  public static void putString(Board b, int x, int y, Terminal t){
-    t.moveCursor(x,y);
+  public static void putString(Board b, Terminal t){
+    t.moveCursor(0,0);
     String s="";
     for (int r=0;r<b.getWidth();r++){
       for (int c=0;c<b.getWidth();c++){
@@ -142,10 +127,11 @@ public class Board{
     terminal.enterPrivateMode();
     terminal.setCursorVisible(false);
     Board b = new Board();
-    putString(b,0,0,terminal);
+    putString(b,terminal);
     boolean running = true;
     while (running){
       Key key = terminal.readInput();
+      //try{
       if (key!=null){
         boolean won=false;
         Random rng = new Random();
@@ -153,9 +139,9 @@ public class Board{
                     terminal.exitPrivateMode();
                     running = false;
                 }
-                if (key.getKind() == Key.Kind.ArrowLeft) {
+                else if (key.getKind() == Key.Kind.ArrowLeft) {
                   for (int i=1;i<b.getWidth();i++){
-                    for (int n=0;n<b.getWidth();i++){
+                    for (int n=0;n<b.getWidth();n++){
                       b.move(b.blockAt(i,n),"left");
                     }
                   }
@@ -165,7 +151,7 @@ public class Board{
                     }
                 }
 
-                if (key.getKind() == Key.Kind.ArrowRight) {
+                else if (key.getKind() == Key.Kind.ArrowRight) {
                   for (int i=b.getWidth()-1;i>-1;i--){
                     for (int n=b.getWidth()-1;n>-1;n--){
                       b.move(b.blockAt(i,n),"right");
@@ -177,7 +163,7 @@ public class Board{
                   }
                 }
 
-                if (key.getKind() == Key.Kind.ArrowUp) {
+                else if (key.getKind() == Key.Kind.ArrowUp) {
                   for (int n=1;n<b.getWidth();n++){
                     for (int i=0;i<b.getWidth();i++){
                       b.move(b.blockAt(i,n),"up");
@@ -189,7 +175,7 @@ public class Board{
                   }
                 }
 
-                if (key.getKind() == Key.Kind.ArrowDown) {
+                else if (key.getKind() == Key.Kind.ArrowDown) {
                   for (int n=b.getWidth()-1;n>-1;n--){
                     for (int i=b.getWidth()-1;i>-1;i--){
                       b.move(b.blockAt(i,n),"down");
@@ -200,7 +186,9 @@ public class Board{
                     System.out.println("You got 2048 and won!!");
                   }
                 }
+                putString(b,terminal);
       }
+    //}catch(ArrayIndexOutOfBoundsException e){}
     }
   }
 }
