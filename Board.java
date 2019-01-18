@@ -25,12 +25,11 @@ public class Board{
       }
     }
     randomBlock();
-    //Random rng=new Random();
-    //board[randomRow(rng.nextInt())][randomCol(rng.nextInt())].setValue(2);
   }
 
   /**Randomly generates a new row.
   *@param x is the seed, randomly generated in constructor.
+  *@return a new row as an int.
   */
   public static int randomRow(int x){
     Random rng = new Random(x);
@@ -40,6 +39,7 @@ public class Board{
 
   /**Randomly generates a new column.
   *@param x is the seed, randomly generated in constructor.
+  *@return a new column as an int.
   */
   public static int randomCol(int x){
     Random rng = new Random(x);
@@ -47,6 +47,9 @@ public class Board{
     return col;
   }
 
+  /**Makes a new block at a randomly generated location.
+  *@return true when block successfully placed; false if it can't be placed.
+  */
   public boolean randomBlock(){
     Random rng = new Random();
     boolean fits = false;
@@ -71,17 +74,25 @@ public class Board{
     return board.length;
   }
 
+  /**Returns the value of block at location (r,c).
+  *@param r is the row.
+  *@param c is the column.
+  *@return the value as an int.
+  */
   public int valueAt(int r,int c){
     return board[r][c].getValue();
   }
 
+  /**Returns the block at location (r,c).
+  *@param r is the row.
+  *@param c is the column.
+  *@return the Block.
+  */
   public Block blockAt(int r,int c){
     return board[r][c];
   }
 
-
-
-  /**Deletes a block. Helper function for combining blocks.
+  /**Deletes a block. Helper function for combine.
   *@param b is the block to be deleted.
   */
   public void delete(Block b){
@@ -91,13 +102,19 @@ public class Board{
 
   /**Combines two blocks.
   *@param t is the block that will remain.
-  *@param o is the block that will be combined into Block this and be deleted.
+  *@param o is the block that will be combined with Block t and be deleted.
+  *@param s is the direction the combining is happening.
   */
-  public void combine(Block t, Block o){
+  public void combine(Block t, Block o, String s){
     delete(o);
     t.setValue(t.getValue()*2);
   }
 
+  /**Moves block in direction s.
+  *@param block is the block being controlled and moved.
+  *@param s is the direction the block is moving in.
+  *@return true if the move is successful, false otherwise.
+  */
   public boolean move(Block block, String s){
     if (s.equals("left")){
       if (valueAt(block.getRow(),block.getCol()-1)==0){//if there's a free space to the left, move there
@@ -114,7 +131,7 @@ public class Board{
         board[block.getRow()][block.getCol()+1]=new Block(block.getRow(),block.getCol()+1,block.getValue());
         delete(block);
         return true;
-      }else if(valueAt(block.getRow(),block.getCol()+1)==valueAt(block.getRow(),block.getCol())){
+      }else if(valueAt(block.getRow(),block.getCol()+1)==valueAt(block.getRow(),block.getCol())){//if the block to the right has same value, combine!
         combine(blockAt(block.getRow(),block.getCol()+1),block);
         return true;
       }
@@ -124,7 +141,7 @@ public class Board{
         board[block.getRow()+1][block.getCol()]=new Block(block.getRow()+1,block.getCol(),block.getValue());
         delete(block);
         return true;
-      }else if(valueAt(block.getRow()+1,block.getCol())==valueAt(block.getRow(),block.getCol())){
+      }else if(valueAt(block.getRow()+1,block.getCol())==valueAt(block.getRow(),block.getCol())){//if the block to the top has same value, combine!
         combine(blockAt(block.getRow()+1,block.getCol()),block);
         return true;
       }
@@ -134,7 +151,7 @@ public class Board{
         board[block.getRow()-1][block.getCol()]=new Block(block.getRow()-1,block.getCol(),block.getValue());
         delete(block);
         return true;
-      }else if(valueAt(block.getRow()-1,block.getCol())==valueAt(block.getRow(),block.getCol())){
+      }else if(valueAt(block.getRow()-1,block.getCol())==valueAt(block.getRow(),block.getCol())){//if the block below has the same value, combine!
         combine(blockAt(block.getRow()-1,block.getCol()),block);
         return true;
       }
@@ -142,7 +159,9 @@ public class Board{
     return true;
   }
 
-  /**Configurates Terminal to look like 2048.
+  /**Configures Terminal to look like 2048.
+  *@param b is the Board being used.
+  *@param t is the Terminal being configured.
   */
   public static void putString(Board b, Terminal t){
     t.moveCursor(0,0);
