@@ -26,3 +26,7 @@ Development Log
 1/16:Started trying to program the actual gameplay and the logic is tripping me up. I also
      realized that some methods I originally put in my Board class actually belonged to the
      Block class.
+1/17:Continued working on the gameplay. It's, like, half-working I'd say? For some reason
+     it's kind of wacky still, but I feel like I've got the foundation down. Over the week-
+     end I'm going to continue perfecting it and hopefully implementing user-controlled
+     graphics.
